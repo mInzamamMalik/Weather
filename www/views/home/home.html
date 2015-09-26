@@ -1,0 +1,86 @@
+<ion-view	view-title="Weather">
+
+  <ion-nav-buttons side="primary">
+    <button class="button button-clear" ng-click="  showPopup();">
+     <i class="ion-alert ion-information-circled"></i>
+    </button>
+  </ion-nav-buttons>
+
+  <ion-content>
+
+    <div class="row bar bar-header item-input-inset">
+
+      <pane class="col-80">
+        <label class=" item-input-wrapper"  >
+          <form ng-submit="search(cityname)">
+            <input type="search" placeholder="Search" ng-model="cityname">
+          </form>
+        </label>
+      </pane>
+
+
+        <button class=" col-10 button button-clear" col ng-click="search(cityname)">
+          <i class="icon ion-ios-search"></i>
+        </button>
+        <button class=" col-10 button button-clear" col ng-click="cityname = ''">
+          <i class="icon ion-ios-close"></i>
+        </button>
+
+    </div>
+
+
+    <div	class="list" ng-show="showHideContent && weather.cod != '404'">
+
+
+      <div class="item">
+        Geo coordinates:&nbsp&nbsp
+        <span class="positive">
+          {{weather.coord.lat + ", "+ weather.coord.lon}}
+          <a class="positive" href="https://google.com/maps/@{{weather.coord.lat}},{{weather.coord.lon}},13z">
+            (view in map)
+          </a>
+        </span>
+
+      </div>
+
+      <div class="item">Place:&nbsp&nbsp              <span class="positive">{{weather.name+", "+ weather.sys.country}}                      </span></div>
+      <div class="item">Temperature:&nbsp&nbsp        <span class="positive">{{weather.main.temp - 273.15 | number: 1}}       &deg;C        </span> </div>
+      <div class="item">Today's	High temp:&nbsp&nbsp  <span class="positive">{{weather.main.temp_max - 273.15 | number: 1}}   &deg;C        </span> </div>
+      <div class="item">Today's	Low temp:&nbsp&nbsp   <span class="positive">{{weather.main.temp_min - 273.15 | number: 1}}   &deg;C        </span> </div>
+      <div class="item">Sky condition:&nbsp&nbsp      <span class="positive">{{weather.weather[0].main+", "+weather.weather[0].description}}</span></div>
+      <div class="item">Atmospheric pressure:&nbsp&nbsp           <span class="positive">{{weather.main.pressure}} hPa                                      </span> </div>
+
+      <div	class="item">Humidity:&nbsp&nbsp <span class="positive">{{weather.main.humidity}}%</span></div>
+      <div	class="item">Wind speed:&nbsp&nbsp <span class="positive">{{weather.wind.speed}} mph</span></div>
+      <div	class="item">Wind direction:&nbsp&nbsp <span class="positive">{{getDirection(weather.wind.deg)}}</span></div>
+    </div>
+
+    <div class="card" ng-show="weather.cod == '404' || weather.name == 'Connaught Place'">
+      <div class="item item-text-wrap">
+        <span class="assertive">Did you misspelled?</span><br />
+        <h1>Search engine is very flexible</h1> just put the city or country's name or its part<br />
+        Example - <b>Lon, UK</b> or <b>Lon, GB</b> or <b>London, GB</b> or <b>Lon, England</b>
+      </div>
+    </div>
+
+
+    <ion-side-menus>
+      <!-- Left menu -->
+      <ion-side-menu side="left">
+      </ion-side-menu>
+
+      <ion-side-menu-content>
+        <!-- Main content, usually <ion-nav-view> -->
+      </ion-side-menu-content>
+
+      <!-- Right menu -->
+      <ion-side-menu side="right">
+      </ion-side-menu>
+
+    </ion-side-menus>
+
+
+
+
+  </ion-content>
+</ion-view>

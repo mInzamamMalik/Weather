@@ -58,7 +58,7 @@ angular.module("starter")
     $scope.search = function(cityname){
       $scope.weather = '';
       $ionicLoading.show();
-      $http.get("http://api.openweathermap.org/data/2.5/weather?q=" + cityname)
+      $http.get("http://api.openweathermap.org/data/2.5/weather?q=" + cityname +"&APPID=901d672d14c778eefb41af3fd3871f1f")
         .success(function (weather) {
 
           $scope.weather = weather;

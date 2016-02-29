@@ -25,7 +25,5 @@
       "id": "ionic-plugin-deploy"
     }
   ],
-  "cordovaPlatforms": [
-    "android"
-  ]
+  "cordovaPlatforms": []
 }

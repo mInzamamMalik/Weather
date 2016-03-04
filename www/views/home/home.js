@@ -1,22 +1,18 @@
-
-
 /**
  * Created by malikasinger on 19/08/2015.
  */
 angular.module("starter")
 
-  .controller('homeController',	function	($scope,	$http, $ionicLoading, $ionicSideMenuDelegate, $ionicPopup, $timeout) {
+  .controller('homeController', function ($scope, $http, $ionicLoading, $ionicSideMenuDelegate, $ionicPopup, $timeout) {
 
 
     // Triggered on a button click, or some other target
-    $scope.showPopup = function() {
+    $scope.showPopup = function () {
 
       // An elaborate, custom popup
       var myPopup = $ionicPopup.show({
         title: 'Saylani Weather App',
-        subTitle:
-
-        '<b>devloped by:</b> ' +
+        subTitle: '<b>devloped by:</b> ' +
         '<br />' +
         ' Inzamam Malik ' +
         '<br /><br />' +
@@ -35,15 +31,15 @@ angular.module("starter")
         'facebook.com/malikasinger' +
         '<br />'
       });
-      myPopup.then(function(res) {
+      myPopup.then(function (res) {
         console.log('Tapped!', res);
       });
-      $timeout(function() {
+      $timeout(function () {
         myPopup.close(); //close the popup after 5 seconds for some reason
       }, 5000);
     };
 
-    $scope.toggleLeft = function() {
+    $scope.toggleLeft = function () {
       $ionicSideMenuDelegate.toggleLeft();
     };
 
@@ -52,41 +48,53 @@ angular.module("starter")
     var directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
 
 
-
-
-
-    $scope.search = function(cityname){
+    $scope.search = function (cityname) {
       $scope.weather = '';
       $ionicLoading.show();
-      $http.get("http://api.openweathermap.org/data/2.5/weather?q=" + cityname +"&APPID=901d672d14c778eefb41af3fd3871f1f")
-        .success(function (weather) {
+      $http.get("http://api.openweathermap.org/data/2.5/weather?q=" + cityname + "&APPID=901d672d14c778eefb41af3fd3871f1f").then(
+        function (weather) {
 
-          $scope.weather = weather;
+          console.log("this is response", weather);
+          $scope.weather = weather.data;
           $ionicLoading.hide();
           $scope.showHideContent = true;
           $scope.cityname = "";
           cordova.plugins.Keyboard.close();
 
-        }).error(function (err) {
+        },
+        function (error) {
+          console.log("this is err", error);
 
           $scope.showHideContent = false;
           $ionicLoading.show({
-            template : "Could not load weather update" +
+            template: "Could not load weather update" +
             "<br>" +
             "<i class='calm'>kindly check internet connection.</i>",
-            duration : 3000
+            duration: 3000
           });
-        });
+        });//ended get
     };
 
-    $scope.getDirection = function(degree)  {
-    if  (degree > 338)  {
-      degree  = 360-degree;
+
+
+
+
+
+
+
+    $scope.getDirection = function (degree) {
+      if (degree > 338) {
+        degree = 360 - degree;
+      }
+      var index = Math.floor((degree + 22) / 45);
+      return directions[index];
     }
-    var index = Math.floor((degree  + 22) / 45);
-      return  directions[index];
-    }
+
+
 
   });
 
+
+//http://api.openweathermap.org/data/2.5/weather?q=pk&APPID=901d672d14c778eefb41af3fd3871f1f
+//http://api.openweathermap.org/data/2.5/weather?q=pk&APPID=901d672d14c778eefb41af3fd3871f1f
 
